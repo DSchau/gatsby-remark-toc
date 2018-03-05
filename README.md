@@ -1,5 +1,7 @@
 # gatsby-remark-toc
 
+[![Build Status](https://travis-ci.org/DSchau/gatsby-remark-toc.svg?branch=master)](https://travis-ci.org/DSchau/gatsby-remark-toc)
+
 Adds a table of contents to Markdown files using [mdast-util-toc][mdast-util-toc]
 
 ## Install
