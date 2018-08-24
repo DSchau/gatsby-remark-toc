@@ -1,10 +1,10 @@
 const generateTOC = require('mdast-util-toc');
 const mm = require('micromatch');
 
-module.exports = (
+module.exports = function generateTOCNodes(
   { markdownNode, markdownAST },
-  { include = [], header = 'Table of Contents' }
-) => {
+  { include = [], header = 'Table of Contents', mdastUtilTocOptions = {} }
+) {
   const filePath = markdownNode.fileAbsolutePath
     .split(process.cwd())
     .pop()
@@ -15,7 +15,7 @@ module.exports = (
     return;
   }
 
-  const toc = generateTOC(markdownAST).map;
+  const toc = generateTOC(markdownAST, mdastUtilTocOptions).map;
   const index = markdownAST.children.findIndex(node => node.type !== 'yaml');
 
   if (!toc || index < 0) {
