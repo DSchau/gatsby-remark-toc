@@ -1,15 +1,35 @@
-# gatsby-remark-toc
+<p align="center">
+  <a href="https://next.gatsbyjs.org">
+    <img alt="Gatsby" src="https://www.gatsbyjs.org/monogram.svg" width="60" />
+  </a>
+</p>
+<h1 align="center">
+  gatsby-remark-toc
+</h1>
 
-[![Build Status](https://travis-ci.org/DSchau/gatsby-remark-toc.svg?branch=master)](https://travis-ci.org/DSchau/gatsby-remark-toc)
-![NPM Version](https://img.shields.io/npm/v/gatsby-remark-toc.svg)
+<h3 align="center">
+  ⚛️ 📄 :rocket:
+</h3>
+<p align="center">
+  <strong>Adds a table of contents to Markdown files using <a href="https://www.npmjs.com/package/mdast-util-toc">mdast-util-toc</a></strong>
+</p>
+<p align="center">
+  <a href="https://travis-ci.org/DSchau/gatsby-remark-toc">
+    <img src="https://travis-ci.org/DSchau/gatsby-remark-toc.svg?branch=master" alt="Current TravisCI build status." />
+  </a>
+  <a href="https://www.npmjs.org/package/gatsby">
+    <img src="https://img.shields.io/npm/v/gatsby-remark-toc.svg?style=flat-square" alt="Current npm package version." />
+  </a>
+  <a href="https://npmcharts.com/compare/gatsby-remark-toc?minimal=true">
+    <img src="https://img.shields.io/npm/dm/gatsby-remark-toc.svg" alt="Downloads per month on npm." />
+  </a>
+</p>
 
-Adds a table of contents to Markdown files using [mdast-util-toc][mdast-util-toc]
-
-## Install
+## 🚀 Install
 
 `npm install gatsby-remark-toc --save`
 
-## How to use
+## 🎓 How to use
 
 ```js
 // in your gatsby-config.js
@@ -25,6 +45,33 @@ plugins: [
             include: [
               'content/**/*.md' // an include glob to match against
             ]
+          }
+        }
+      ]
+    }
+  }
+];
+```
+
+additionally, you can pass custom options directly to [mdast-util-toc][mdast-util-toc] like so:
+
+```js
+// in your gatsby-config.js
+plugins: [
+  {
+    resolve: 'gatsby-transformer-remark',
+    options: {
+      plugins: [
+        {
+          resolve: 'gatsby-remark-toc',
+          options: {
+            header: 'Table of Contents', // the custom header text
+            include: [
+              'content/**/*.md' // an include glob to match against
+            ],
+            mdastUtilTocOptions: {
+              maxDepth: 2
+            }
           }
         }
       ]
