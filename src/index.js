@@ -3,7 +3,13 @@ const mm = require('micromatch');
 
 module.exports = function generateTOCNodes(
   { markdownNode, markdownAST },
-  { include = [], header = 'Table of Contents', mdastUtilTocOptions = {} }
+  {
+    include = [],
+    header = 'Table of Contents',
+    headerDepth = 2,
+    wrappingWithSection = false,
+    mdastUtilTocOptions = {}
+  }
 ) {
   const filePath = markdownNode.fileAbsolutePath
     .split(process.cwd())
@@ -25,7 +31,7 @@ module.exports = function generateTOCNodes(
   const nodes = [
     header && {
       type: 'heading',
-      depth: 2,
+      depth: headerDepth,
       children: [
         {
           type: 'text',
@@ -36,9 +42,24 @@ module.exports = function generateTOCNodes(
     toc
   ].filter(Boolean);
 
+  const tocSection = wrappingWithSection
+    ? [
+        {
+          type: 'section',
+          data: {
+            hProperties: {
+              'aria-hidden': true,
+              class: 'gatsby-remark-toc'
+            }
+          },
+          children: nodes
+        }
+      ]
+    : nodes;
+
   markdownAST.children = [].concat(
     markdownAST.children.slice(0, index),
-    ...nodes,
+    ...tocSection,
     markdownAST.children.slice(index)
   );
 };

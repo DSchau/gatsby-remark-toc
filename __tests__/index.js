@@ -1,3 +1,7 @@
+/**
+ * @jest-environment node
+ */
+
 const Remark = require('remark');
 const mdastUtil = require('mdast-util-toc');
 const addToc = require('../src');
@@ -157,5 +161,54 @@ describe('custom behavior', () => {
     const children = toc.children[0].children;
 
     expect(children).toHaveLength(maxDepth);
+  });
+
+  test('it allows for a wrapper', () => {
+    let markdownNode = getMarkdownNode(
+      `
+# hello world
+
+## Test
+
+### Another
+
+#### Hi
+  `,
+      'content/example.md'
+    );
+
+    addToc(markdownNode, {
+      include: ['content/*.md'],
+      wrappingWithSection: true
+    });
+
+    const [wrapper] = markdownNode.markdownAST.children;
+
+    expect(wrapper.type).toBe('section');
+    expect(wrapper.data.hProperties.class).toBe('gatsby-remark-toc');
+  });
+
+  test('it allows for headerDepth', () => {
+    let markdownNode = getMarkdownNode(
+      `
+# hello world
+
+## Test
+
+### Another
+
+#### Hi
+  `,
+      'content/example.md'
+    );
+
+    addToc(markdownNode, {
+      include: ['content/*.md'],
+      headerDepth: 3
+    });
+
+    const [heading] = markdownNode.markdownAST.children;
+
+    expect(heading.depth).toBe(3);
   });
 });
