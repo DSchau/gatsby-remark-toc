@@ -27,9 +27,12 @@ module.exports = function generateTOCNodes(
   visit(markdownAST, `heading`, function (node) {
     node.type = `html`;
     node.children[0].type = `html`;
-    node.value = `<h${node.depth} id="${node.children[0].value}">${node.children[0].value}</h${node.depth}>`;
+    let id = node.children[0].value;
+    id = id.toLowerCase().split(' ').join('-');
+    node.value = `<h${node.depth} id="${id}">${node.children[0].value}</h${node.depth}>`;
   });
  
+
   const nodes = [
     header && {
       type: 'heading',
