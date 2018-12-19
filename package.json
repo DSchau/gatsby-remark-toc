@@ -21,7 +21,8 @@
     "jest": "~22.4.2",
     "prettier": "~1.11.1",
     "pretty-quick": "~1.4.1",
-    "remark": "~9.0.0"
+    "remark": "~9.0.0",
+    "unist-util-visit": "~1.4.0"
   },
   "dependencies": {
     "mdast-util-toc": "~2.0.1",
