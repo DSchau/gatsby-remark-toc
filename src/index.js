@@ -1,5 +1,6 @@
 const generateTOC = require('mdast-util-toc');
 const mm = require('micromatch');
+var visit = require(`unist-util-visit`);
 
 module.exports = function generateTOCNodes(
   { markdownNode, markdownAST },
@@ -21,6 +22,16 @@ module.exports = function generateTOCNodes(
   if (!toc || index < 0) {
     return;
   }
+
+  // Add id to heading nodes
+  visit(markdownAST, `heading`, function (node) {
+    node.type = `html`;
+    node.children[0].type = `html`;
+    let id = node.children[0].value;
+    id = id.toLowerCase().split(' ').join('-');
+    node.value = `<h${node.depth} id="${id}">${node.children[0].value}</h${node.depth}>`;
+  });
+ 
 
   const nodes = [
     header && {

@@ -12,6 +12,10 @@
     "test": "jest",
     "watch": "babel -w src --out-dir . --ignore __tests__"
   },
+  "jest": {
+    "verbose": true,
+    "testURL": "http://localhost/"
+  },
   "devDependencies": {
     "@babel/cli": "~7.0.0-beta.40",
     "@babel/core": "~7.0.0-beta.40",
@@ -21,7 +25,8 @@
     "jest": "~22.4.2",
     "prettier": "~1.11.1",
     "pretty-quick": "~1.4.1",
-    "remark": "~9.0.0"
+    "remark": "~9.0.0",
+    "unist-util-visit": "~1.4.0"
   },
   "dependencies": {
     "mdast-util-toc": "~2.0.1",
