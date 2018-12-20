@@ -36,6 +36,12 @@ const hasTOCHeading = (ast, value = 'Table of Contents') => {
   });
 };
 
+const hasHeadingId = ast => {
+  return hasNode(ast, node => {
+    return node.type === 'html' && node.value.indexOf('id') > -1;
+  });
+};
+
 describe('basic functionality', () => {
   test('it adds a header', () => {
     let markdownNode = getMarkdownNode(
@@ -122,6 +128,20 @@ title: hello world
     addToc(markdownNode, { include: ['content/*.md'], header });
 
     expect(hasTOCHeading(markdownNode.markdownAST, header)).toBe(true);
+  });
+
+  test('it adds an id to header use its content', () => {
+    let markdownNode = getMarkdownNode(
+      `
+# Hello World
+## Other Content
+  `,
+      'content/example.md'
+    );
+
+    addToc(markdownNode, { include: ['content/*.md'] });
+
+    expect(hasHeadingId(markdownNode.markdownAST)).toBe(true);
   });
 });
 
