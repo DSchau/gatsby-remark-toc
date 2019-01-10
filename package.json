@@ -1,8 +1,11 @@
 {
   "name": "gatsby-remark-toc",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "main": "index.js",
   "author": "Dustin Schau <dustinschau@gmail.com> (https://dustinschau.com)",
+  "contributors": [
+    "Manuel Wieser <office@manuelwieser.com> (https://manu.ninja)"
+  ],
   "license": "MIT",
   "scripts": {
     "precommit": "pretty-quick --staged",
