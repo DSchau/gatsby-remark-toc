@@ -53,7 +53,34 @@ plugins: [
 ];
 ```
 
-additionally, you can pass custom options directly to [mdast-util-toc][mdast-util-toc] like so:
+If you want your table of contents to appear at a specific place in your Markdown file, use the `reuseExistingHeader` option:
+
+```js
+// in your gatsby-config.js
+plugins: [
+  {
+    resolve: 'gatsby-transformer-remark',
+    options: {
+      plugins: [
+        {
+          resolve: 'gatsby-remark-toc',
+          options: {
+            header: 'Table of Contents', // the custom header text
+            reuseExistingHeader: true, // searches for `Table of Contents` in your Markdown file and adds the list right after it
+            include: [
+              'content/**/*.md' // an include glob to match against
+            ]
+          }
+        }
+      ]
+    }
+  }
+];
+```
+
+Use the `orderedList` option if you want to change the list type from `<ul>` to `<ol>`.
+
+Additionally, you can pass custom options directly to [mdast-util-toc][mdast-util-toc] like so:
 
 ```js
 // in your gatsby-config.js

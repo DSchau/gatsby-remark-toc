@@ -158,4 +158,35 @@ describe('custom behavior', () => {
 
     expect(children).toHaveLength(maxDepth);
   });
+  test('it allows for reusing an existing header', () => {
+    let markdownNode = getMarkdownNode(
+      `
+## One
+## ToC
+## Two
+## Three
+  `,
+      'content/example.md'
+    );
+
+    const header = 'ToC';
+
+    addToc(markdownNode, {
+      include: ['content/*.md'],
+      header,
+      useExistingHeader: true
+    });
+
+    const toc = markdownNode.markdownAST.children[2];
+
+    expect(hasTOCHeading(markdownNode.markdownAST, header)).toBe(true);
+
+    expect(markdownNode.markdownAST.children[0].type).toBe('heading');
+    expect(markdownNode.markdownAST.children[1].type).toBe('heading');
+    expect(toc.type).toBe('list');
+    expect(markdownNode.markdownAST.children[3].type).toBe('heading');
+    expect(markdownNode.markdownAST.children[4].type).toBe('heading');
+
+    expect(toc.children).toHaveLength(3);
+  });
 });
