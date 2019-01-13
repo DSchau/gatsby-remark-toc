@@ -8,6 +8,8 @@ module.exports = function generateTOCNodes(
     header = 'Table of Contents',
     useExistingHeader = false,
     orderedList = false,
+    headerDepth = 2,
+    wrappingWithSection = false,
     mdastUtilTocOptions = {}
   }
 ) {
@@ -50,7 +52,7 @@ module.exports = function generateTOCNodes(
   const nodes = [
     header && {
       type: 'heading',
-      depth: 2,
+      depth: headerDepth,
       children: [
         {
           type: 'text',
@@ -61,9 +63,24 @@ module.exports = function generateTOCNodes(
     toc
   ].filter(Boolean);
 
+  const tocSection = wrappingWithSection
+    ? [
+        {
+          type: 'section',
+          data: {
+            hProperties: {
+              'aria-hidden': true,
+              class: 'gatsby-remark-toc'
+            }
+          },
+          children: nodes
+        }
+      ]
+    : nodes;
+
   markdownAST.children = [].concat(
     markdownAST.children.slice(0, index),
-    ...nodes,
+    ...tocSection,
     markdownAST.children.slice(index)
   );
 };
