@@ -41,7 +41,15 @@ plugins: [
         {
           resolve: 'gatsby-remark-toc',
           options: {
-            header: 'Table of Contents', // the custom header text
+            header: {
+              text: 'Table of Contents', // the custom header text
+              depth: 2 // the custom depth of header
+            },
+            /**
+             * or, alternatively, you can only specify header text
+             * this way, depth will be set to 2 by default
+             */
+            // header: 'Table of Contents',
             include: [
               'content/**/*.md' // an include glob to match against
             ]
@@ -79,6 +87,40 @@ plugins: [
 ```
 
 Use the `orderedList` option if you want to change the list type from `<ul>` to `<ol>`.
+
+Meanwhile, you can specify a wrapper container for table of contents:
+
+```js
+// in your gatsby-config.js
+plugins: [
+  {
+    resolve: 'gatsby-transformer-remark',
+    options: {
+      plugins: [
+        {
+          resolve: 'gatsby-remark-toc',
+          options: {
+            header: 'Table of Contents', // the custom header text
+            wrapper: {
+              name: 'aside', // tagName of wrapper component
+              properties: {
+                // attributes of wrapper component
+                class: 'custom-class-here'
+                // you can add more here, such as aria-hidden: true, etc.
+              }
+            },
+            // or, alternatively you can simply pass a string here, which will be used as tagName
+            // wrapper: 'aside',
+            include: [
+              'content/**/*.md' // an include glob to match against
+            ]
+          }
+        }
+      ]
+    }
+  }
+];
+```
 
 Additionally, you can pass custom options directly to [mdast-util-toc][mdast-util-toc] like so:
 
