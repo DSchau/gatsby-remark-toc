@@ -245,7 +245,7 @@ describe('custom behavior', () => {
     expect(wrapper.data.hProperties.class).toBe('custom-class');
   });
 
-  test('it allows for headerDepth', () => {
+  test('it allows for customizing depth of header', () => {
     let markdownNode = getMarkdownNode(
       `
 # hello world
@@ -258,7 +258,10 @@ describe('custom behavior', () => {
 
     addToc(markdownNode, {
       include: ['content/*.md'],
-      headerDepth: 3
+      header: {
+        text: 'Table of Contents',
+        depth: 3
+      }
     });
 
     const [heading] = markdownNode.markdownAST.children;

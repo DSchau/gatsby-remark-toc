@@ -8,7 +8,6 @@ module.exports = function generateTOCNodes(
     header = 'Table of Contents',
     useExistingHeader = false,
     orderedList = false,
-    headerDepth = 2,
     wrapper = undefined,
     mdastUtilTocOptions = {}
   }
@@ -23,10 +22,16 @@ module.exports = function generateTOCNodes(
     return;
   }
 
+  let headerText;
+  if (typeof header === 'string') {
+    headerText = header;
+  } else if (typeof header.text === 'string') {
+    headerText = header.text;
+  }
   const index = markdownAST.children.findIndex(node => {
     if (useExistingHeader) {
       if (node.type === 'heading') {
-        return node.children.findIndex(child => child.value === header) + 1;
+        return node.children.findIndex(child => child.value === headerText) + 1;
       }
       return false;
     }
@@ -50,13 +55,13 @@ module.exports = function generateTOCNodes(
   toc.ordered = orderedList;
 
   const nodes = [
-    header && {
+    headerText && {
       type: 'heading',
-      depth: headerDepth,
+      depth: typeof header.depth === 'number' ? header.depth : 2,
       children: [
         {
           type: 'text',
-          value: header
+          value: headerText
         }
       ]
     },

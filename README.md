@@ -41,7 +41,15 @@ plugins: [
         {
           resolve: 'gatsby-remark-toc',
           options: {
-            header: 'Table of Contents', // the custom header text
+            header: {
+              text: 'Table of Contents', // the custom header text
+              depth: 2 // the custom depth of header
+            },
+            /**
+             * or, alternatively, you can only specify header text
+             * this way, depth will be set to 2 by default
+             */
+            // header: 'Table of Contents',
             include: [
               'content/**/*.md' // an include glob to match against
             ]
