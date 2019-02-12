@@ -195,7 +195,7 @@ describe('custom behavior', () => {
     expect(toc.children).toHaveLength(3);
   });
 
-  test('it allows for a wrapper', () => {
+  test('it allows for adding a wrapper container of toc', () => {
     let markdownNode = getMarkdownNode(
       `
 # hello world
@@ -208,13 +208,41 @@ describe('custom behavior', () => {
 
     addToc(markdownNode, {
       include: ['content/*.md'],
-      wrappingWithSection: true
+      wrapper: 'aside'
     });
 
     const [wrapper] = markdownNode.markdownAST.children;
 
     expect(wrapper.type).toBe('section');
-    expect(wrapper.data.hProperties.class).toBe('gatsby-remark-toc');
+    expect(wrapper.data.hName).toBe('aside');
+  });
+
+  test('it allows for a wrapper with rich options', () => {
+    let markdownNode = getMarkdownNode(
+      `
+# hello world
+## Test
+### Another
+#### Hi
+  `,
+      'content/example.md'
+    );
+
+    addToc(markdownNode, {
+      include: ['content/*.md'],
+      wrapper: {
+        name: 'aside',
+        properties: {
+          class: 'custom-class'
+        }
+      }
+    });
+
+    const [wrapper] = markdownNode.markdownAST.children;
+
+    expect(wrapper.type).toBe('section');
+    expect(wrapper.data.hName).toBe('aside');
+    expect(wrapper.data.hProperties.class).toBe('custom-class');
   });
 
   test('it allows for headerDepth', () => {

@@ -9,7 +9,7 @@ module.exports = function generateTOCNodes(
     useExistingHeader = false,
     orderedList = false,
     headerDepth = 2,
-    wrappingWithSection = false,
+    wrapper = undefined,
     mdastUtilTocOptions = {}
   }
 ) {
@@ -63,15 +63,14 @@ module.exports = function generateTOCNodes(
     toc
   ].filter(Boolean);
 
-  const tocSection = wrappingWithSection
+  const tocSection = wrapper
     ? [
         {
           type: 'section',
           data: {
-            hProperties: {
-              'aria-hidden': true,
-              class: 'gatsby-remark-toc'
-            }
+            hName: typeof wrapper === 'string' ? wrapper : wrapper.name,
+            hProperties:
+              typeof wrapper === 'string' ? undefined : wrapper.properties
           },
           children: nodes
         }
