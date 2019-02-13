@@ -25,6 +25,8 @@
   </a>
 </p>
 
+_Note: this package has been deprecated. Consider using [gatsby-transformer-remark](https://www.gatsbyjs.org/packages/gatsby-transformer-remark/#getting-table-of-contents) directly and use the exposed `tableOfContents` field via GraphQL to generate your table of contents_
+
 ## 🚀 Install
 
 `npm install gatsby-remark-toc --save`
